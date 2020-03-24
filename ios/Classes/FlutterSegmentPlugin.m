@@ -12,6 +12,12 @@ static NSDictionary *_appendToContextMiddleware;
     NSString *path = [[NSBundle mainBundle] pathForResource: @"Info" ofType: @"plist"];
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile: path];
     NSString *writeKey = [dict objectForKey: @"com.claimsforce.segment.WRITE_KEY"];
+
+    // Do not execute if there is no write key.
+    if (writeKey == nil) {
+        return;
+    }
+
     BOOL trackApplicationLifecycleEvents = [[dict objectForKey: @"com.claimsforce.segment.TRACK_APPLICATION_LIFECYCLE_EVENTS"] boolValue];
     SEGAnalyticsConfiguration *configuration = [SEGAnalyticsConfiguration configurationWithWriteKey:writeKey];
 
